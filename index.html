@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حجز دولار</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* حاوية التطبيق لمحاكاة شاشة الهاتف */
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        /* القسم العلوي الأزرق */
+        .top-section {
+            background: linear-gradient(160deg, #2855cd 0%, #3247a3 100%);
+            /* تم زيادة المسافات هنا لتطويل المساحة الزرقاء: 60 علوي، 80 سفلي */
+            padding: 60px 20px 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        /* الشعار (اللوجو) */
+        .logo-container {
+            /* تم زيادة المسافة تحت اللوجو ليتناسب مع الحجم الجديد */
+            margin-bottom: 40px; 
+        }
+        
+        .logo-container img {
+            /* تم تكبير اللوجو بشكل ملحوظ هنا */
+            width: 330px; 
+            height: auto;
+            display: block;
+        }
+
+        /* بطاقة الحالة العلوية */
+        .status-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            width: 100%;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+
+        .status-card .right-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-box {
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon-box svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        .status-text h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .status-text p {
+            font-size: 13px;
+            color: #d1d9f8;
+        }
+
+        .arrow-down svg {
+            width: 16px;
+            height: 16px;
+            fill: #fff;
+        }
+
+        /* القسم السفلي المظلم */
+        .bottom-section {
+            /* تعديل المسافة العلوية ليتناسب مع المساحة الزرقاء الأكبر */
+            padding: 40px 20px 30px 20px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* صندوق النموذج (الخانات) */
+        .form-card {
+            background-color: #222222;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+        }
+
+        /* تصميم خانة الاختيار الوحيدة */
+        .input-group {
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #1a1a1a;
+            position: relative;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .input-group select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            padding: 18px 0;
+            appearance: none; /* إخفاء السهم الافتراضي */
+            outline: none;
+            cursor: pointer;
+        }
+
+        .input-group select option {
+            background-color: #222;
+            color: #fff;
+        }
+
+        /* أيقونة السهم داخل خانة الاختيار */
+        .select-icon {
+            position: absolute;
+            left: 15px;
+            pointer-events: none;
+        }
+        .select-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: #888;
+        }
+
+        /* زر الاستمرار */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #184bd6, #245ce8);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .submit-btn:active {
+            opacity: 0.8;
+        }
+
+        .submit-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        /* الروابط السفلية (تركناها للحفاظ على التصميم) */
+        .footer-links {
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            color: #888;
+            font-size: 13px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-link svg {
+            width: 16px;
+            height: 16px;
+            fill: #888;
+        }
+
+        .subscribe-btn {
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="top-section">
+            <div class="logo-container">
+                <img src="https://i.imgur.com/UNIpHj3.png" id="bank-logo" alt="Bank Logo">
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="form-card">
+                <div class="input-group">
+                    <select id="booking-type">
+                        <option value="individuals">أفراد</option>
+                        <option value="companies">شركات</option>
+                    </select>
+                    <div class="select-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <button id="submit-btn" class="submit-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                    <span>استمرار</span>
+                </button>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-row">
+                    <a href="#" class="footer-link">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        البحث عن صراف آلي
+                    </a>
+                    <a href="#" class="footer-link">
+                        <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm1-11h-2v5l4.28 2.54.92-1.54-3.2-1.9V8z"/></svg>
+                        المظهر • نظام
+                    </a>
+                </div>
+                <button class="subscribe-btn">الاشتراك في التطبيق</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ربط عناصر الصفحة بالـ JavaScript
+        const bookingTypeSelect = document.getElementById('booking-type');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // حدث الضغط على زر الاستمرار
+        submitBtn.addEventListener('click', function() {
+            // 1. تخزين الاختيار في localStorage لاستخدامه لاحقاً
+            const selectedType = bookingTypeSelect.value;
+            localStorage.setItem('selectedBookingType', selectedType);
+            
+            // 2. توجيه المستخدم لصفحة info.html
+            window.location.href = 'info.html';
+        });
+    </script>
+</body>
+</html>

